@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Band.hasMany(models.BandBookings);
       Band.belongsToMany(models.Booking, { through: "band_bookings" });
 
-      // Super M-M (Band-Availability-Booking)
+      // Super M-M (Band-Availability-Genre)
       Band.hasMany(models.Availability);
       Band.belongsToMany(models.Genre, { through: "availabilities" });
 

@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       //Super M-M (Band-BandBookings-Bookings)
-      Booking.hasMany(models.Band, { through: "band_bookings" });
+      Booking.belongsToMany(models.Band, { through: "band_bookings" });
       Booking.hasMany(models.BandBookings);
 
       // Super M-M (User-Booking-Genre)
-      Booking.belongsTo(models.User, { through: "bookings", as: "Client" });
-      Booking.belongsTo(models.Genre);
+      Booking.belongsToMany(models.User, { through: "bookings", as: "Client" });
+      Booking.hasMany(models.Genre);
     }
   }
   Booking.init(

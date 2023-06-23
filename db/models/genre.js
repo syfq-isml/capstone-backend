@@ -10,14 +10,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Super M-M (User-Booking-Genre)
       Genre.hasMany(models.Booking);
-      Genre.belongsToMany(models.Genre, { through: "bookings" });
+      Genre.belongsToMany(models.User, { through: "bookings" });
 
       //Super M-M (Genre-Availabilty-Band)
       Genre.hasMany(models.Availability);
-      Genre.belongsToMany(models.Genre, { through: "availabilities" });
+      Genre.belongsToMany(models.Band, { through: "availabilities" });
 
       //M-M with Band
-      Genre.belongsToMany(models.Bands, { through: "band_genres" });
+      Genre.belongsToMany(models.Band, { through: "band_genres" });
     }
   }
   Genre.init(
