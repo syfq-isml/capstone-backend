@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       Booking.hasMany(models.BandBookings);
 
       // Super M-M (User-Booking-Genre)
-      Booking.belongsToMany(models.User, { through: "bookings", as: "Client" });
-      Booking.hasMany(models.Genre);
+      Booking.belongsTo(models.User);
+      Booking.belongsTo(models.Genre);
     }
   }
   Booking.init(

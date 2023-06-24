@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Super M-M (User-Booking-Genre)
       User.hasMany(models.Booking);
-      User.belongsToMany(models.Genre, { through: "bookings" });
+      User.belongsToMany(models.Genre, { through: "bookings", as: "Client" });
     }
   }
   User.init(
