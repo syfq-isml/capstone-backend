@@ -15,7 +15,7 @@ module.exports = {
       {
         band_id: 5,
         booking_id: 1,
-        status: "Confirmed",
+        status: "Rejected",
         rank: 2,
         created_at: new Date(),
         updated_at: new Date(),
