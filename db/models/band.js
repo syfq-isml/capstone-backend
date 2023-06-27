@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // Super M-M (Band-BandBookings-Booking)
-      Band.hasMany(models.BandBookings);
-      Band.belongsToMany(models.Booking, { through: "band_bookings" });
+      Band.hasMany(models.bandBooking);
+      Band.belongsToMany(models.booking, { through: models.bandBooking });
 
-      // Super M-M (Band-Availability-Genre)
-      Band.hasMany(models.Availability);
-      Band.belongsToMany(models.Genre, { through: "availabilities" });
+      // 1-M (Band-Availability)
+      Band.hasMany(models.availability);
 
-      //M-M (Band-BandGenres-Genre)
-      Band.belongsToMany(models.Genre, { through: "band_genres" });
+      //Super M-M (Band-BandGenres-Genre)
+      Band.hasMany(models.bandGenre);
+      Band.belongsToMany(models.genre, { through: models.bandGenre });
     }
   }
   Band.init(
@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Band",
+      modelName: "band",
+      tableName: "bands",
       underscored: true,
     }
   );

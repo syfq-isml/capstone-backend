@@ -21,15 +21,14 @@ const AvailabilitiesController = require("./controllers/availabilitiesController
 
 // Import db
 const db = require("./db/models/index");
-const { Availability, Band, BandBookings, BandGenres, Booking, Genre, User } =
-  db;
+const { availability, band, bandBooking, bandGenre, booking, genre, user } = db;
 
 // Initialise controllers
-const authController = new AuthController(User);
-const bandsController = new BandsController(Band, db);
-const genresController = new GenresController(Genre);
-const usersController = new UsersController(User);
-const availabilitiesController = new AvailabilitiesController(Availability);
+const authController = new AuthController(user);
+const bandsController = new BandsController(band, db);
+const genresController = new GenresController(genre);
+const usersController = new UsersController(user);
+const availabilitiesController = new AvailabilitiesController(availability);
 
 // Initialise routers
 const authRouter = new AuthRouter(authController).routes();

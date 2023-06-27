@@ -37,7 +37,13 @@ class AuthController extends BaseController {
         expiresIn: "1h",
       });
 
-      return res.json({ success: true, token });
+      return res.json({
+        success: true,
+        token,
+        id: newUser.id,
+        name: newUser.name,
+        isAdmin: false,
+      });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }
@@ -74,7 +80,13 @@ class AuthController extends BaseController {
         expiresIn: "1h",
       });
 
-      return res.json({ success: true, token });
+      return res.json({
+        success: true,
+        token,
+        id: newUser.id,
+        name: newUser.name,
+        isAdmin: true,
+      });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }
@@ -117,7 +129,13 @@ class AuthController extends BaseController {
         expiresIn: "1h",
       });
 
-      return res.json({ success: true, token });
+      return res.json({
+        success: true,
+        token,
+        id: user.id,
+        name: user.name,
+        isAdmin: user.isAdmin,
+      });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }

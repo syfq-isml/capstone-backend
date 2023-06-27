@@ -9,8 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // Super M-M (User-Booking-Genre)
-      User.hasMany(models.Booking);
-      User.belongsToMany(models.Genre, { through: "bookings", as: "Client" });
+      User.hasMany(models.booking);
+      User.belongsToMany(models.genre, {
+        through: models.booking,
+        as: "client",
+      });
     }
   }
   User.init(
@@ -40,9 +43,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: "user",
+      tableName: "users",
       underscored: true,
     }
   );
+
   return User;
 };
