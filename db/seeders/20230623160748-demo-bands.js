@@ -12,8 +12,7 @@ module.exports = {
   They were discovered through Sony Music Japan's International Audition, and signed to the Sony subsidiary DefSTAR Records. 
   Their debut single, "Mr. Raindrop", was used as the second ending theme for the anime Gintama. 
   Their debut album, Turn It Up!, was released on 2 August`,
-        photo_url:
-          "https://static.wikia.nocookie.net/drama/images/8/88/Turn_It_Up_Cover.jpg/revision/latest/scale-to-width-down/600?cb=20190610153117&path-prefix=es",
+        photo_url: "https://i1.jpopasia.com/assets/1/24402-amplified-3ooa.jpg",
         created_at: new Date(),
         updated_at: new Date(),
       },
