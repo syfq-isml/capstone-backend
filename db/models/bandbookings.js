@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // Super M-M (Band-BandBookings-Booking)
-      BandBookings.belongsTo(models.Booking);
-      BandBookings.belongsTo(models.Band);
+      BandBookings.belongsTo(models.booking);
+      BandBookings.belongsTo(models.band);
     }
   }
   BandBookings.init(
@@ -18,14 +18,14 @@ module.exports = (sequelize, DataTypes) => {
       bandId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Band",
+          model: sequelize.models.band,
           key: "id",
         },
       },
       bookingId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Booking",
+          model: sequelize.models.booking,
           key: "id",
         },
       },
@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "BandBookings",
+      modelName: "bandBooking",
+      tableName: "band_bookings",
       underscored: true,
     }
   );

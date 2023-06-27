@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       //Super M-M (Band-BandBookings-Bookings)
-      Booking.belongsToMany(models.Band, { through: "band_bookings" });
-      Booking.hasMany(models.BandBookings);
+      Booking.hasMany(models.bandBooking);
+      Booking.belongsToMany(models.band, { through: models.bandBooking });
 
       // Super M-M (User-Booking-Genre)
-      Booking.belongsTo(models.User);
-      Booking.belongsTo(models.Genre);
+      Booking.belongsTo(models.user);
+      Booking.belongsTo(models.genre);
     }
   }
   Booking.init(
@@ -36,14 +36,14 @@ module.exports = (sequelize, DataTypes) => {
       genreId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Genre",
+          model: sequelize.models.genre,
           key: "id",
         },
       },
       clientId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "User",
+          model: sequelize.models.user,
           key: "id",
         },
       },
@@ -56,7 +56,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Booking",
+      modelName: "booking",
+      tableName: "bookings",
       underscored: true,
     }
   );

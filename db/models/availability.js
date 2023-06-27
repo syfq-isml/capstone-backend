@@ -8,9 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Super M-M (Band-Availability-Genre)
-      Availability.belongsTo(models.Band);
-      Availability.belongsTo(models.Genre);
+      // 1-M (Band-Availability-Genre)
+      Availability.belongsTo(models.band);
     }
   }
   Availability.init(
@@ -18,14 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       bandId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Band",
+          model: sequelize.models.band,
           key: "id",
         },
       },
       genreId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Genre",
+          model: sequelize.models.genre,
           key: "id",
         },
       },
@@ -38,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Availability",
+      modelName: "availability",
+      tableName: "availabilities",
       underscored: true,
     }
   );

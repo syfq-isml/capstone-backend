@@ -7,28 +7,33 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {}
+    static associate(models) {
+      // Super M-M (Band-BandGenres-Genre)
+      BandGenres.belongsTo(models.band);
+      BandGenres.belongsTo(models.genre);
+    }
   }
   BandGenres.init(
     {
       genreId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Genre",
+          model: sequelize.models.genre,
           key: "id",
         },
       },
       bandId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Band",
+          model: sequelize.models.band,
           key: "id",
         },
       },
     },
     {
       sequelize,
-      modelName: "BandGenres",
+      modelName: "bandGenre",
+      tableName: "band_genres",
       underscored: true,
     }
   );

@@ -1,9 +1,9 @@
 const BaseController = require("./baseController");
 
 class BandsController extends BaseController {
-  constructor(model, { Genre }) {
+  constructor(model, { genre }) {
     super(model);
-    this.genreModel = Genre;
+    this.genreModel = genre;
   }
 
   getAllWithGenres = async (req, res) => {
