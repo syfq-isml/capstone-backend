@@ -14,17 +14,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   Availability.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       bandId: {
         type: DataTypes.INTEGER,
         references: {
           model: sequelize.models.band,
-          key: "id",
-        },
-      },
-      genreId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: sequelize.models.genre,
           key: "id",
         },
       },

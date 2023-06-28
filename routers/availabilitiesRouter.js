@@ -1,16 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-class GenresRouter {
+class AvailabilitiesRouter {
   constructor(controller, checkJWT = null) {
     this.controller = controller;
     this.checkJWT = checkJWT;
   }
 
   routes() {
-    router.get("/", this.controller.getAll);
+    // Unprotected Routes
+
+    // Protected Routes
+    router.use(this.checkJWT);
+    router.get("/band/:bandId", this.controller.getAvailOfOneBand);
+    router.post("/band/:bandId", this.controller.addAvailOfOneBand);
+    router.delete(
+      "/:availId/band/:bandId",
+      this.controller.deleteOneAvailOfOneBand
+    );
     return router;
   }
 }
 
-module.exports = GenresRouter;
+module.exports = AvailabilitiesRouter;

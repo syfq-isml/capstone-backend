@@ -31,7 +31,7 @@ const authController = new AuthController(user);
 const bandsController = new BandsController(band, db);
 const genresController = new GenresController(genre);
 const usersController = new UsersController(user);
-const availabilitiesController = new AvailabilitiesController(availability);
+const availabilitiesController = new AvailabilitiesController(availability, db);
 const bookingsController = new BookingsController(booking, db);
 
 // Initialise routers
@@ -40,7 +40,8 @@ const bandsRouter = new BandsRouter(bandsController).routes();
 const genresRouter = new GenresRouter(genresController).routes();
 const usersRouter = new UsersRouter(usersController).routes();
 const availabilitiesRouter = new AvailabilitiesRouter(
-  availabilitiesController
+  availabilitiesController,
+  checkJWT
 ).routes();
 const bookingsRouter = new BookingsRouter(
   bookingsController,

@@ -19,16 +19,6 @@ module.exports = {
         },
         field: "band_id",
       },
-      genreId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: "genres",
-          },
-          key: "id",
-        },
-        field: "genre_id",
-      },
       startBlockedTiming: {
         type: Sequelize.DATE,
         field: "start_blocked_timing",
@@ -45,7 +35,7 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: "udpated_at",
+        field: "updated_at",
       },
     });
   },
