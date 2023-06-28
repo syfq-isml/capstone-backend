@@ -13,12 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       Booking.belongsToMany(models.band, { through: models.bandBooking });
 
       // Super M-M (User-Booking-Genre)
-      Booking.belongsTo(models.user);
+      Booking.belongsTo(models.user, { foreignKey: "clientId" });
       Booking.belongsTo(models.genre);
     }
   }
   Booking.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       startDateTime: {
         allowNull: false,
         type: DataTypes.DATE,

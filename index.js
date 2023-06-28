@@ -11,6 +11,7 @@ const BandsRouter = require("./routers/bandsRouter");
 const GenresRouter = require("./routers/genresRouter");
 const UsersRouter = require("./routers/usersRouter");
 const AvailabilitiesRouter = require("./routers/availabilitiesRouter");
+const BookingsRouter = require("./routers/bookingsRouter");
 
 // Import controllers
 const AuthController = require("./controllers/authController");
@@ -18,9 +19,11 @@ const BandsController = require("./controllers/bandsController");
 const GenresController = require("./controllers/genresController");
 const UsersController = require("./controllers/usersController");
 const AvailabilitiesController = require("./controllers/availabilitiesController");
+const BookingsController = require("./controllers/bookingsController");
 
 // Import db
 const db = require("./db/models/index");
+const checkJWT = require("./middlewares/checkJWT");
 const { availability, band, bandBooking, bandGenre, booking, genre, user } = db;
 
 // Initialise controllers
@@ -29,6 +32,7 @@ const bandsController = new BandsController(band, db);
 const genresController = new GenresController(genre);
 const usersController = new UsersController(user);
 const availabilitiesController = new AvailabilitiesController(availability);
+const bookingsController = new BookingsController(booking, db);
 
 // Initialise routers
 const authRouter = new AuthRouter(authController).routes();
@@ -38,6 +42,10 @@ const usersRouter = new UsersRouter(usersController).routes();
 const availabilitiesRouter = new AvailabilitiesRouter(
   availabilitiesController
 ).routes();
+const bookingsRouter = new BookingsRouter(
+  bookingsController,
+  checkJWT
+).routes();
 
 // Enable CORS
 app.use(cors());
@@ -46,12 +54,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Initialise routes
+// Initialise root routes
 app.use("/auth", authRouter);
 app.use("/bands", bandsRouter);
 app.use("/genres", genresRouter);
 app.use("/users", usersRouter);
 app.use("/avail", availabilitiesRouter);
+app.use("/bookings", bookingsRouter);
 
 app.listen(PORT, () => {
   console.log(`Express app listening on port ${PORT}!`);
