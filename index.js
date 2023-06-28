@@ -35,7 +35,7 @@ const availabilitiesController = new AvailabilitiesController(availability);
 const bookingsController = new BookingsController(booking, db);
 
 // Initialise routers
-const authRouter = new AuthRouter(authController).routes();
+const authRouter = new AuthRouter(authController, checkJWT).routes();
 const bandsRouter = new BandsRouter(bandsController).routes();
 const genresRouter = new GenresRouter(genresController).routes();
 const usersRouter = new UsersRouter(usersController).routes();

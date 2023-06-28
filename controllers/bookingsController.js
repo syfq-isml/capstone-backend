@@ -11,7 +11,7 @@ class BookingsController extends BaseController {
   getBookingsOfOneUser = async (req, res) => {
     const { userId } = req.params;
 
-    if (!(req.userId === userId))
+    if (!(+req.userId === +userId))
       return res
         .status(403)
         .json({ success: false, msg: "You are not the guy" });

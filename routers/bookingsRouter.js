@@ -12,7 +12,7 @@ class BookingsRouter {
 
     // Protected routes
     router.use(this.checkJWT);
-    router.get("/user", this.controller.getBookingsOfOneUser);
+    router.get("/user/:userId", this.controller.getBookingsOfOneUser);
     return router;
   }
 }

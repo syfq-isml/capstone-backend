@@ -8,9 +8,15 @@ class AuthRouter {
   }
 
   routes() {
+    // Unprotected routes
     router.post("/login", this.controller.loginUser);
     router.post("/register", this.controller.registerUser);
     router.post("/register/admin", this.controller.registerAdminUser);
+
+    // Protected routes
+    router.use(this.checkJWT);
+    router.post("/validate", this.controller.validateToken);
+
     return router;
   }
 }

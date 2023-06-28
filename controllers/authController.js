@@ -140,6 +140,10 @@ class AuthController extends BaseController {
       return res.status(400).json({ success: false, msg: err });
     }
   };
+
+  validateToken = async (req, res) => {
+    return res.json({ success: true, msg: "Valid Token" });
+  };
 }
 
 module.exports = AuthController;
