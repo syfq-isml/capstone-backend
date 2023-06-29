@@ -12,6 +12,7 @@ class AvailabilitiesRouter {
 
     // Protected Routes
     router.use(this.checkJWT);
+    router.post("/genre/:genreId", this.controller.getAvailableBands);
     router.get("/band/:bandId", this.controller.getAvailOfOneBand);
     router.post("/band/:bandId", this.controller.addAvailOfOneBand);
     router.delete(
