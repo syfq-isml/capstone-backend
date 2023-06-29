@@ -1,5 +1,6 @@
 const BaseController = require("./baseController");
 const areIntervalsOverlapping = require("date-fns/areIntervalsOverlapping");
+const isBefore = require("date-fns/isBefore");
 
 class AvailabilitiesController extends BaseController {
   constructor(model, { band, genre }) {
@@ -12,6 +13,11 @@ class AvailabilitiesController extends BaseController {
     const { genreId } = req.params;
     const { startDateTime, endDateTime } = req.body;
 
+    if (isBefore(new Date(endDateTime), new Date(startDateTime)))
+      return res
+        .status(400)
+        .json({ success: false, msg: "End date is before start date!" });
+
     // get bands of a given genre
     // get blocked timings of those bands
     // check if overlapping
@@ -20,6 +26,17 @@ class AvailabilitiesController extends BaseController {
     // return the array
 
     try {
+      const genre = await this.genreModel.findOne({
+        where: {
+          id: genreId,
+        },
+      });
+
+      if (genre == null)
+        return res
+          .status(400)
+          .json({ success: false, msg: "Genre does not exist!" });
+
       const bands = await this.bandModel.findAll({
         attributes: ["id", "name", "photoUrl"],
         include: [
@@ -32,6 +49,8 @@ class AvailabilitiesController extends BaseController {
           },
         ],
       });
+
+      if (bands.length === 0) return res.json([]);
 
       const availableBands = [];
 
@@ -52,7 +71,8 @@ class AvailabilitiesController extends BaseController {
                   start: new Date(timing.startBlockedTiming),
                   end: new Date(timing.endBlockedTiming),
                 },
-                { start: new Date(startDateTime), end: new Date(endDateTime) }
+                { start: new Date(startDateTime), end: new Date(endDateTime) },
+                { inclusive: true }
               )
             )
               isAvailable = false;
