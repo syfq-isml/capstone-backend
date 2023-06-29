@@ -8,6 +8,30 @@ class BookingsController extends BaseController {
     this.bandModel = band;
   }
 
+  getAllBookings = async (req, res) => {
+    /*
+    const { userId } = req.params;
+
+    if (req.isAdmin === false)
+      return res
+        .status(403)
+        .json({ success: false, msg: "You are not the guy" });
+        */
+    try {
+      // console.log(this.model);
+      const bookings = await this.model.findAll({
+        include: [{ model: this.bandModel }],
+      });
+
+      console.log(bookings.id);
+
+      return res.json(bookings);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ success: false, msg: err });
+    }
+  };
+
   getBookingsOfOneUser = async (req, res) => {
     const { userId } = req.params;
 
