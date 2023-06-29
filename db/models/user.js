@@ -13,12 +13,18 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.genre, {
         through: models.booking,
         foreignKey: "clientId",
-        as: "client",
+        // as: "client",
       });
     }
   }
   User.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       isAdmin: {
         allowNull: false,
         defaultValue: false,

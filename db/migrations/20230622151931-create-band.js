@@ -17,6 +17,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         field: "gig_rate",
       },
+      email: {
+        type: Sequelize.STRING,
+        unique: true,
+      },
+      phoneNumber: {
+        type: Sequelize.STRING,
+        field: "phone_number",
+      },
       description: {
         type: Sequelize.TEXT,
       },

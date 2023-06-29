@@ -11,7 +11,7 @@ class AvailabilitiesController extends BaseController {
     const { bandId } = req.params;
 
     try {
-      const bandAvail = await this.model.findOne({
+      const bandAvail = await this.model.findAll({
         where: {
           bandId,
         },

@@ -9,7 +9,7 @@ class BandsController extends BaseController {
   getAllWithGenres = async (req, res) => {
     try {
       const bandsWithGenres = await this.model.findAll({
-        include: this.genreModel,
+        include: [{ model: this.genreModel, through: { attributes: [] } }],
       });
       return res.json(bandsWithGenres);
     } catch (err) {
@@ -25,7 +25,7 @@ class BandsController extends BaseController {
         where: {
           id: bandId,
         },
-        include: this.genreModel,
+        include: [{ model: this.genreModel, through: { attributes: [] } }],
       });
       return res.json(bandWithGenres);
     } catch (err) {

@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   BandBookings.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       bandId: {
         type: DataTypes.INTEGER,
         references: {

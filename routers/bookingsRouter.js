@@ -9,9 +9,10 @@ class BookingsRouter {
 
   routes() {
     // Unprotected routes
-    router.get("/all", this.controller.getAllBookings);
+
     // Protected routes
     router.use(this.checkJWT);
+    router.get("/", this.controller.getAllBookings);
     router.get("/user/:userId", this.controller.getBookingsOfOneUser);
     return router;
   }

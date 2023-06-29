@@ -13,6 +13,8 @@ module.exports = {
   Their debut single, "Mr. Raindrop", was used as the second ending theme for the anime Gintama. 
   Their debut album, Turn It Up!, was released on 2 August`,
         photo_url: "https://i1.jpopasia.com/assets/1/24402-amplified-3ooa.jpg",
+        email: "ampli@fied.com",
+        phone_number: "92736523",
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -24,6 +26,8 @@ module.exports = {
     The band is widely considered as the most successful and influential Cantopop band from Hong Kong.`, // str
         photo_url:
           "https://i.discogs.com/rzyFTbxdgFH8gl734ibwwqlKZagRPQ5iu_XCQfMwbIU/rs:fit/g:sm/q:90/h:821/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTIyNjgw/MjMtMTYxMTAyODc5/My00MDQ5LmpwZWc.jpeg",
+        email: "beyond@gmail.com",
+        phone_number: "92836253",
         created_at: new Date(),
         updated_at: new Date(),
       },
@@ -34,6 +38,8 @@ module.exports = {
     She was noted for her purity of tone, impeccable diction, phrasing, timing, intonation, and a "horn-like" improvisational ability, particularly in her scat singing.`, // str
         photo_url:
           "https://upload.wikimedia.org/wikipedia/commons/6/65/Ella_Fitzgerald_1962.JPG",
+        email: "ella@fitzgerald.com",
+        phone_number: "82735533",
         created_at: new Date(),
         updated_at: new Date(),
       },

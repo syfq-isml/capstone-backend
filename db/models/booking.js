@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Booking.belongsToMany(models.band, { through: models.bandBooking });
 
       // Super M-M (User-Booking-Genre)
-      Booking.belongsTo(models.user, { foreignKey: "clientId" });
+      Booking.belongsTo(models.user, { foreignKey: "clientId", as: "client" });
       Booking.belongsTo(models.genre);
     }
   }

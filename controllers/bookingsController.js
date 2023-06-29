@@ -1,29 +1,31 @@
-const { Sequelize } = require("../db/models");
 const BaseController = require("./baseController");
 
 class BookingsController extends BaseController {
-  constructor(model, { bandBooking, band }) {
+  constructor(model, { bandBooking, band, user }) {
     super(model);
     this.bandBookingModel = bandBooking;
     this.bandModel = band;
+    this.userModel = user;
   }
 
   getAllBookings = async (req, res) => {
-    /*
-    const { userId } = req.params;
-
-    if (req.isAdmin === false)
+    if (req.isAdmin !== true)
       return res
         .status(403)
-        .json({ success: false, msg: "You are not the guy" });
-        */
+        .json({ success: false, msg: "You are not an admin!" });
+
     try {
       // console.log(this.model);
       const bookings = await this.model.findAll({
-        include: [{ model: this.bandModel }],
+        include: [
+          { model: this.bandModel },
+          {
+            model: this.userModel,
+            as: "client",
+            attributes: ["id", "name", "email", "phoneNumber"],
+          },
+        ],
       });
-
-      console.log(bookings.id);
 
       return res.json(bookings);
     } catch (err) {

@@ -22,12 +22,26 @@ module.exports = (sequelize, DataTypes) => {
   }
   Band.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       name: {
         allowNull: false,
         type: DataTypes.STRING,
       },
       gigRate: {
         type: DataTypes.INTEGER,
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        field: "phone_number",
       },
       description: {
         type: DataTypes.TEXT,

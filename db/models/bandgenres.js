@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   BandGenres.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       genreId: {
         type: DataTypes.INTEGER,
         references: {
