@@ -1,6 +1,7 @@
 const BaseController = require("./baseController");
 const areIntervalsOverlapping = require("date-fns/areIntervalsOverlapping");
 const isBefore = require("date-fns/isBefore");
+const { Op } = require("sequelize");
 
 class AvailabilitiesController extends BaseController {
   constructor(model, { band, genre }) {
@@ -38,7 +39,7 @@ class AvailabilitiesController extends BaseController {
           .json({ success: false, msg: "Genre does not exist!" });
 
       const bands = await this.bandModel.findAll({
-        attributes: ["id", "name", "photoUrl"],
+        attributes: ["id"],
         include: [
           {
             model: this.genreModel,
@@ -78,11 +79,27 @@ class AvailabilitiesController extends BaseController {
               isAvailable = false;
           });
 
-          if (isAvailable === true) availableBands.push(band);
+          if (isAvailable === true) availableBands.push(band.id);
         })
       );
 
-      return res.json(availableBands);
+      const bandsWithGenres = await this.bandModel.findAll({
+        where: {
+          id: {
+            [Op.in]: availableBands,
+          },
+        },
+        attributes: {
+          exclude: ["email", "phoneNumber", "createdAt", "updatedAt"],
+        },
+        include: {
+          model: this.genreModel,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+          through: { attributes: [] },
+        },
+      });
+
+      return res.json(bandsWithGenres);
     } catch (err) {
       console.log(err);
       return res.status(400).json({ success: false, msg: err });
