@@ -124,7 +124,7 @@ class BookingsController extends BaseController {
         })
       );
 
-      return res.json(newBooking);
+      return res.json({ success: true, newBooking });
     } catch (err) {
       console.log(err);
       return res.status(400).json({ success: false, msg: err });
