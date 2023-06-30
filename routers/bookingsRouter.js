@@ -14,6 +14,7 @@ class BookingsRouter {
     router.use(this.checkJWT);
     router.get("/", this.controller.getAllBookings);
     router.get("/user/:userId", this.controller.getBookingsOfOneUser);
+    router.post("/user/:userId/genre/:genreId", this.controller.makeABooking);
     return router;
   }
 }
