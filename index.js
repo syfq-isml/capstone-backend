@@ -12,6 +12,7 @@ const GenresRouter = require("./routers/genresRouter");
 const UsersRouter = require("./routers/usersRouter");
 const AvailabilitiesRouter = require("./routers/availabilitiesRouter");
 const BookingsRouter = require("./routers/bookingsRouter");
+const BandBookingsRouter = require("./routers/bandBookingsRouter");
 
 // Import controllers
 const AuthController = require("./controllers/authController");
@@ -20,6 +21,7 @@ const GenresController = require("./controllers/genresController");
 const UsersController = require("./controllers/usersController");
 const AvailabilitiesController = require("./controllers/availabilitiesController");
 const BookingsController = require("./controllers/bookingsController");
+const BandBookingsController = require("./controllers/bandBookingsController");
 
 // Import db
 const db = require("./db/models/index");
@@ -33,6 +35,7 @@ const genresController = new GenresController(genre);
 const usersController = new UsersController(user);
 const availabilitiesController = new AvailabilitiesController(availability, db);
 const bookingsController = new BookingsController(booking, db);
+const bandBookingsController = new BandBookingsController(bandBooking, db);
 
 // Initialise routers
 const authRouter = new AuthRouter(authController, checkJWT).routes();
@@ -45,6 +48,10 @@ const availabilitiesRouter = new AvailabilitiesRouter(
 ).routes();
 const bookingsRouter = new BookingsRouter(
   bookingsController,
+  checkJWT
+).routes();
+const bandBookingsRouter = new BandBookingsRouter(
+  bandBookingsController,
   checkJWT
 ).routes();
 
@@ -62,6 +69,7 @@ app.use("/genres", genresRouter);
 app.use("/users", usersRouter);
 app.use("/avail", availabilitiesRouter);
 app.use("/bookings", bookingsRouter);
+app.use("/bandbookings", bandBookingsRouter);
 
 app.listen(PORT, () => {
   console.log(`Express app listening on port ${PORT}!`);

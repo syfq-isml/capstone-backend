@@ -57,6 +57,24 @@ class BookingsController extends BaseController {
     }
   };
 
+  getOneBooking = async (req, res) => {
+    const { bookingId } = req.params;
+
+    try {
+      const booking = await this.model.findOne({
+        where: {
+          id: bookingId,
+        },
+        include: [{ model: this.bandModel }],
+      });
+
+      return res.json(booking);
+    } catch (err) {
+      console.log(err);
+      return res.json({ success: false, msg: err });
+    }
+  };
+
   makeABooking = async (req, res) => {
     const { userId, genreId } = req.params;
     const {
