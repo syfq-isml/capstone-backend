@@ -13,6 +13,7 @@ const UsersRouter = require("./routers/usersRouter");
 const AvailabilitiesRouter = require("./routers/availabilitiesRouter");
 const BookingsRouter = require("./routers/bookingsRouter");
 const BandBookingsRouter = require("./routers/bandBookingsRouter");
+const PaymentsRouter = require("./routers/paymentsRouter");
 
 // Import controllers
 const AuthController = require("./controllers/authController");
@@ -22,6 +23,7 @@ const UsersController = require("./controllers/usersController");
 const AvailabilitiesController = require("./controllers/availabilitiesController");
 const BookingsController = require("./controllers/bookingsController");
 const BandBookingsController = require("./controllers/bandBookingsController");
+const PaymentsController = require("./controllers/paymentsController");
 
 // Import db
 const db = require("./db/models/index");
@@ -36,6 +38,7 @@ const usersController = new UsersController(user);
 const availabilitiesController = new AvailabilitiesController(availability, db);
 const bookingsController = new BookingsController(booking, db);
 const bandBookingsController = new BandBookingsController(bandBooking, db);
+const paymentsController = new PaymentsController(band, db);
 
 // Initialise routers
 const authRouter = new AuthRouter(authController, checkJWT).routes();
@@ -54,11 +57,16 @@ const bandBookingsRouter = new BandBookingsRouter(
   bandBookingsController,
   checkJWT
 ).routes();
+const paymentsRouter = new PaymentsRouter(
+  paymentsController,
+  checkJWT
+).routes();
 
 // Enable CORS
 app.use(cors());
 
 // Setup middleware
+app.use("/payments/webhook", express.raw({ type: "*/*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -70,6 +78,7 @@ app.use("/users", usersRouter);
 app.use("/avail", availabilitiesRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/bandbookings", bandBookingsRouter);
+app.use("/payments", paymentsRouter);
 
 app.listen(PORT, () => {
   console.log(`Express app listening on port ${PORT}!`);
