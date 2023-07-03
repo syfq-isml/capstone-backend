@@ -47,17 +47,18 @@ class PaymentsController extends BaseController {
               product_data: {
                 name: BAND_NAME,
                 images: [BAND_IMG],
-                metadata: {
-                  bandId: BAND_ID,
-                  bookingId: BOOKING_ID,
-                  bandBookingId: BANDBOOKING_ID,
-                },
               },
+
               unit_amount: BAND_RATE * 100,
             },
             quantity: 1,
           },
         ],
+        metadata: {
+          bandId: BAND_ID,
+          bookingId: BOOKING_ID,
+          bandBookingId: BANDBOOKING_ID,
+        },
         mode: "payment",
         success_url: `${process.env.FRONTEND_URL}/payments/success`,
         cancel_url: `${process.env.FRONTEND_URL}/payments/error`,
@@ -88,33 +89,37 @@ class PaymentsController extends BaseController {
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    // Handle the event
-    // if (event.type === "checkout.session.completed") {
-    //   // Retrieve the session
-    //   const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
-    //     event.data.object.id,
-    //     {
-    //       expand: ["line_items"],
-    //     }
-    //   );
-    //   const line_items =
-    //     sessionWithLineItems.line_items[0].price_data.product_data.metadata
-    //       .bookingId;
+    //Handle the event
+    if (event.type === "checkout.session.completed") {
+      // Retrieve the session
+      const sessionWithLineItems = await stripe.checkout.sessions.retrieve(
+        event.data.object.id,
+        {
+          expand: ["line_items"],
+        }
+      );
 
-    //   console.log(line_items);
+      const bookingId = sessionWithLineItems.metadata.bookingId;
+      // const line_items = sessionWithLineItems.line_items.data[0].price;
 
-    // try {
-    //   await this.bookingModel.update(
-    //     {
-    //       status: "Paid & Confirmed",
-    //     },
-    //     { where: { id: bookingId } }
-    //   );
-    // } catch (err) {
-    //   console.log(err);
-    //   res.status(400).json({ success: false, msg: err });
-    // }
-    // }
+      // const bookingId =
+      //   sessionWithLineItems.line_items[0].price_data.product_data.metadata
+      //     .bookingId;
+
+      // console.log(bookingId);
+
+      try {
+        await this.bookingModel.update(
+          {
+            status: "Paid & Confirmed",
+          },
+          { where: { id: Number(bookingId) } }
+        );
+      } catch (err) {
+        console.log(err);
+        res.status(400).json({ success: false, msg: err });
+      }
+    }
     // Return a 200 response to acknowledge receipt of the event
     res.status(200).end();
   };
