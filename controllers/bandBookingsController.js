@@ -2,10 +2,11 @@ const { Op } = require("sequelize");
 const BaseController = require("./baseController");
 
 class BandBookingsController extends BaseController {
-  constructor(model, { booking, band }) {
+  constructor(model, { booking, band, availability }) {
     super(model);
     this.bookingModel = booking;
     this.bandModel = band;
+    this.availModel = availability;
   }
 
   // Admin access only
@@ -75,6 +76,28 @@ class BandBookingsController extends BaseController {
           },
           { where: { id: bookingId } }
         );
+
+        const booking = await this.bookingModel.findOne({
+          where: {
+            id: bookingId,
+          },
+          include: [
+            {
+              model: this.bandModel,
+              through: {
+                where: {
+                  status: "Confirmed",
+                },
+              },
+            },
+          ],
+        });
+
+        await this.availModel.create({
+          bandId: booking.bands[0].id,
+          startBlockedTiming: booking.startDateTime,
+          endBlockedTiming: booking.endDateTime,
+        });
       }
 
       const booking = await this.bookingModel.findOne({
